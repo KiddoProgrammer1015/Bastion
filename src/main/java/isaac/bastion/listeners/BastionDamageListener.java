@@ -54,8 +54,21 @@ public final class BastionDamageListener implements Listener {
 		Set<BastionBlock> blocking = blockManager.shouldStopBlockByBlockingBastion(null, blocks,event.getPlayer().getUniqueId());
 		
 		if (blocking.size() != 0 && !groupManager.canPlaceBlock(event.getPlayer(), blocking)){
+			for(BastionBlock bastion : blocking) {
+				if(bastion.getType().isOnlyDirectDestruction()) {
+					Block block = event.getBlockPlaced();
+					Material type = block.getType();
+					if(type == Material.WATER || type == Material.OBSIDIAN || type == Material.LAVA || type == Material.WEB || type == Material.ENCHANTMENT_TABLE || type == Material.ENDER_CHEST) {
+						event.setCancelled(true);
+						event.getPlayer().sendMessage(ChatColor.RED + "Bastion blocked placement of " + type.name());
+						blockManager.erodeFromPlace(event.getPlayer(), blocking);
+					} else {
+						return;
+					}
+				}
+			}
+
 			blockManager.erodeFromPlace(event.getPlayer(), blocking);
-			
 			event.setCancelled(true);
 			event.getPlayer().sendMessage(ChatColor.RED + "Bastion removed block");
 		}

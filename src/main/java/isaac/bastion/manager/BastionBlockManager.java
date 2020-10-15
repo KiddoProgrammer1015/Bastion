@@ -173,6 +173,9 @@ public class BastionBlockManager {
 		Set<BastionBlock> blocking = new HashSet<BastionBlock>();
 
 		for (BastionBlock bastion : preblocking) {
+			if(bastion.getType().isOnlyDirectDestruction()) {
+				blocking.add(bastion);
+			}
 			if (!bastion.getType().isOnlyDirectDestruction()) {
 				blocking.add(bastion);
 			}
