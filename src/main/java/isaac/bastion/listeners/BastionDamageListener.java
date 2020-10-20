@@ -58,7 +58,8 @@ public final class BastionDamageListener implements Listener {
 				if(bastion.getType().isOnlyDirectDestruction()) {
 					Block block = event.getBlockPlaced();
 					Material type = block.getType();
-					if(type == Material.WATER || type == Material.OBSIDIAN || type == Material.LAVA || type == Material.WEB || type == Material.ENCHANTMENT_TABLE || type == Material.ENDER_CHEST) {
+					if(type == Material.WATER || type == Material.OBSIDIAN || type == Material.LAVA || type == Material.WEB || type == Material.ENCHANTMENT_TABLE || type == Material.ENDER_CHEST
+					  || type == Material.GLASS || type == Material.COAL_BLOCK || type == Material.STAINED_GLASS || type == Material.THIN_GLASS || type == Material.STAINED_GLASS_PANE) {
 						event.setCancelled(true);
 						event.getPlayer().sendMessage(ChatColor.RED + "Bastion blocked placement of " + type.name());
 						blockManager.erodeFromPlace(event.getPlayer(), blocking);
